@@ -38,7 +38,7 @@ valornt(5)
     1. al 10% de la poblacion final casas cuantas casas son, 5 segundos
     2. el crecimiento neto en 10 segundos periodos ((pf/pi)-1)*100, 5 segundos*/
 function valornt (rv) {
-    let num = Math.trunc((Math.random()*10000-1000)+1000)
+        num = Math.trunc((Math.random()*10000-1000)+1000)
         nacer = 0
         muerte = 0
         r = 0
@@ -52,31 +52,30 @@ function valornt (rv) {
         console.log(`total poblacion ${Math.trunc(nt)}`)
         console.log(`crecimiento ${r}`)
     }
-    return nt,num
+    
 }
 function casitas (cb1,rv) {
     cb1(rv)
     let casas = (nt * 10)/100
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve(`la cantidad de casas ha regalar son ${casas}`)
+            resolve(`la cantidad de casas ha regalar son ${Math.trunc(casas)}`)
         }, 5000);
     })
 
 }
-function crecimientoneto (cb1,cb2,rv) {
-    cb2(rv)
-    cb1(cb2,rv)
-    let cn = ((nt * num) / num)*100
+function crecimientoneto (cb1,rv) {
+    cb1(rv)
+    let cn = (nt * (nt - num))*100
     return new Promise(resolve => {
         setTimeout(() => {
             resolve(`el crecimiento neto en ${rv} años es ${cn}`)
         }, 5000);
     })
 }
-async function imprimir (cb1,cb2,rv) {
-    let crecimienton = await crecimientoneto(cb1,cb2,rv)
-    let casita = await casitas(cb2,rv)
-    console.log(crecimienton,casita) 
+async function imprimir (cb1,rv) {
+    let crecimienton = await crecimientoneto(cb1,rv)
+    let casita = await casitas(cb1,rv)
+    console.log(`${crecimienton}\n${casita}`) 
 }
-imprimir (casitas,valornt,2)
+imprimir (valornt,2)
